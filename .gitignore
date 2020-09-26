@@ -77,10 +77,6 @@ static/src/stylesheets/pasteup/.npmrc
 .ensime
 .ensime_cache/
 
-<<<<<<< HEAD
-# TernJS port file
-.tern-port
-=======
 # SSL certificates
 *.crt
 *.key
@@ -88,4 +84,3 @@ static/src/stylesheets/pasteup/.npmrc
 
 # SCSS(for projects requiring only .css styles inside the project directory)
 **/*.scss
->>>>>>> 1313669... chore: update gitignore
