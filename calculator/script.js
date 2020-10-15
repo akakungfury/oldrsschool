@@ -4,9 +4,11 @@ const operationBtns = document.querySelectorAll('[data-operation]');
 const equalsBtn = document.querySelector('[data-equals]');
 const allClearBtn = document.querySelector('[data-all-clear]');
 const deleteBtn = document.querySelector('[data-delete]');
+const changeSignBtn = document.querySelector('[data-change-sign]');
 
 const previousOperandTextElem = document.querySelector('[data-previous-operand]');
 const currentOperandTextElem = document.querySelector('[data-current-operand]');
+
 
 class Calculator {
   constructor(previousOperandTextElem, currentOperandTextElem){
@@ -29,6 +31,10 @@ class Calculator {
 
     this.isCurrentOperandImmutable ? this.currentOperand = number: this.currentOperand = this.currentOperand + number;
     this.isCurrentOperandImmutable = false;
+  }
+
+  changeSign() {
+    this.currentOperand = this.currentOperand * -1;
   }
 
   choseOperation(operation) {
@@ -72,6 +78,11 @@ class Calculator {
         result = prev ** current;
         break;
       case('√'):
+        if (current < 0) {
+          alert('Value should be more then 0!')
+          this.currentOperand = '';
+          return;
+        }
         result = Math.sqrt(current);
         break;
       default:
@@ -119,5 +130,10 @@ allClearBtn.addEventListener('click',() => {
 equalsBtn.addEventListener('click',() => {
   calculator.compute();
   calculator.operation = '';
+  calculator.updateDisplay();
+})
+
+changeSignBtn.addEventListener('click',() => {
+  calculator.changeSign();
   calculator.updateDisplay();
 })
