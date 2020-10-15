@@ -63,6 +63,11 @@ class Calculator {
   }
 
   compute() {
+    if (this.currentOperand === '') {
+      alert("Don't forget to enter value")
+      return;
+    }
+
     let result;
     const prev = parseFloat(this.previousOperand);
     const current = parseFloat(this.currentOperand);
@@ -134,9 +139,8 @@ allClearBtn.addEventListener('click',() => {
 })
 
 equalsBtn.addEventListener('click',() => {
-  calculator.compute();
-  calculator.operation = '';
-  calculator.updateDisplay();
+    calculator.compute();
+    calculator.updateDisplay();
 })
 
 changeSignBtn.addEventListener('click',() => {
