@@ -31,6 +31,8 @@ class Calculator {
   }
 
   choseOperation(operation) {
+    if(operation.toLowerCase() === 'xn') operation = '^';
+
     if(this.currentOperand === '') return;
     if(this.previousOperand !== '') {
       this.compute();
@@ -60,6 +62,9 @@ class Calculator {
       case('÷'):
         result = prev / current;
         break;
+      case('^'):
+        result = prev ** current;
+        break;
       default:
         return;
     }
@@ -72,7 +77,12 @@ class Calculator {
 
   updateDisplay() {
     this.currentOperandTextElem.innerText = this.currentOperand;
-    this.previousOperandTextElem.innerText = this.previousOperand;
+
+    if (this.operation !== '') {
+      this.previousOperandTextElem.innerText = `${this.previousOperand} ${this.operation}`;
+    } else {
+      this.previousOperandTextElem.innerText = this.previousOperand;
+    }
   }
 };
 
@@ -99,5 +109,6 @@ allClearBtn.addEventListener('click',() => {
 
 equalsBtn.addEventListener('click',() => {
   calculator.compute();
+  calculator.operation = '';
   calculator.updateDisplay();
 })
