@@ -28,6 +28,7 @@ class Calculator {
     if(number === '.' && this.currentOperand.includes('.')) return;
 
     this.isCurrentOperandImmutable ? this.currentOperand = number: this.currentOperand = this.currentOperand + number;
+    this.isCurrentOperandImmutable = false;
   }
 
   choseOperation(operation) {
@@ -41,7 +42,7 @@ class Calculator {
     this.isCurrentOperandImmutable = false;
     this.operation = operation;
     this.previousOperand = this.currentOperand;
-    this.currentOperand = ''
+    this.currentOperand = '';
   }
 
   compute() {
