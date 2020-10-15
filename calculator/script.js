@@ -24,7 +24,9 @@ class Calculator {
     this.isCurrentOperandImmutable = false;
   }
 
-  delete() {}
+  delete() {
+    this.currentOperand = this.currentOperand.substring(0, this.currentOperand.length - 1);
+  }
 
   appendNumber(number) {
     if(number === '.' && this.currentOperand.includes('.')) return;
@@ -135,5 +137,10 @@ equalsBtn.addEventListener('click',() => {
 
 changeSignBtn.addEventListener('click',() => {
   calculator.changeSign();
+  calculator.updateDisplay();
+})
+
+deleteBtn.addEventListener('click',() => {
+  calculator.delete();
   calculator.updateDisplay();
 })
