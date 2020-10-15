@@ -4,9 +4,10 @@ body {
 }
 
 .calculator-grid {
+  padding-top: 10px;
   display: grid;
   justify-content: center;
-  align-content: center;
+  align-content: flex-start;
   min-height: 100vh;
   grid-template-columns: repeat(4, 100px);
   grid-template-rows: minmax(150px, auto) repeat(6, 100px);
@@ -64,8 +65,18 @@ body {
 
 .instruction {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
   flex-direction: column;
   font-size: 2rem;
+  width: fit-content;
 }
+
+.notUpperCases {
+  text-transform: lowercase;
+  position: relative;
+  top: -5px;
+  left: 3px;
+}
+ p {
+   margin: 10px;
+ }

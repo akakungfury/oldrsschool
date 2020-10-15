@@ -12,10 +12,12 @@
 
 <body>
   <div class="instruction">
-    Чтобы изменить знак числа: cначала введите число, а затем гажмите "+/-"<br>
-    Т.е. для проверки пункта "-9 / -3 => 3" в задании - последовательность нажатия будет такая:<br>
-    "9" > "+/-" > "÷" > "3" > "+/-" > "="<br>
-    Простите за неудобства, потом подправлю!
+    <p>Возведени в степень X<sup>n</sup>, где X - основание, n - показатель:<br>
+      3<sup>2</sup> => '3' > 'X<sup>n</sup>' > '2' > '='
+    </p>
+    <p>Квадратный корень извлекаетя сразу при нажатии:<br>
+      √9 => '9' > '√'
+    </p>
   </div>
 
   <div class="calculator-grid">
@@ -42,7 +44,7 @@
     <button data-operation>+</button>
     <button data-number>.</button>
     <button data-number>0</button>
-    <button data-operation>x<sup>n</sup></button>
+    <button data-operation>x<sup class="notUpperCases">n</sup></button>
     <button data-operation>-</button>
     <button data-equals class="span-three">=</button>
     <button data-operation>√</button>
