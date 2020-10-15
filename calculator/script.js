@@ -31,12 +31,16 @@ class Calculator {
   appendNumber(number) {
     if(number === '.' && this.currentOperand.includes('.')) return;
 
-    this.isCurrentOperandImmutable ? this.currentOperand = number: this.currentOperand = this.currentOperand + number;
+    this.isCurrentOperandImmutable ? this.currentOperand = number : this.currentOperand = this.currentOperand + number;
     this.isCurrentOperandImmutable = false;
   }
 
   changeSign() {
-    this.currentOperand = this.currentOperand * -1;
+    if (this.currentOperand.includes('-')) {
+      this.currentOperand = this.currentOperand.substring(1);
+    } else {
+      this.currentOperand = `-${this.currentOperand}`;
+    }
   }
 
   choseOperation(operation) {
@@ -60,8 +64,8 @@ class Calculator {
 
   compute() {
     let result;
-    const prev = parseFloat(this.previousOperand)
-    const current = parseFloat(this.currentOperand)
+    const prev = parseFloat(this.previousOperand);
+    const current = parseFloat(this.currentOperand);
 
     switch (this.operation) {
       case('+'):
