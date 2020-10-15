@@ -41,8 +41,13 @@ class Calculator {
 
     this.isCurrentOperandImmutable = false;
     this.operation = operation;
-    this.previousOperand = this.currentOperand;
-    this.currentOperand = '';
+    if (operation === '√') {
+      this.compute();
+      this.operation = '';
+    } else {
+      this.previousOperand = this.currentOperand;
+      this.currentOperand = '';
+    }
   }
 
   compute() {
@@ -66,13 +71,16 @@ class Calculator {
       case('^'):
         result = prev ** current;
         break;
+      case('√'):
+        result = Math.sqrt(current);
+        break;
       default:
         return;
     }
 
     this.isCurrentOperandImmutable = true;
     this.currentOperand = result;
-    this.previousOperand = '';
+    if (this.operation !== '√') this.previousOperand = '';
     this.operation = '';
   }
 
