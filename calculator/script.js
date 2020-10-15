@@ -79,7 +79,7 @@ class Calculator {
     }
 
     this.isCurrentOperandImmutable = true;
-    this.currentOperand = result;
+    this.currentOperand = Number(result.toFixed(12));
     if (this.operation !== '√') this.previousOperand = '';
     this.operation = '';
   }
