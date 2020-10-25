@@ -50,8 +50,47 @@ body {
 
 h1 {
   margin: 5vh 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 h2 {
   margin: 5vh 0;
+}
+
+h1 > span {
+  min-width: 10%;
+}
+
+.focus:hover::after {
+  height: 1.5rem;
+  font-size: 0.75rem;
+  content: '...';
+  position: absolute;
+  line-height: 2.5rem;
+}
+
+.name:hover:after {
+  height: 2rem;
+  font-size: 1rem;
+  content: '...';
+  position: absolute;
+  line-height: 3.5rem;
+}
+
+.focus:hover,
+.name:hover {
+  cursor: pointer;
+  transform: scale(1.015);
+}
+
+.focus:focus,
+.name:focus {
+ outline: none;
+}
+
+.focus:focus::after,
+.name:focus::after {
+ content: none;
 }
