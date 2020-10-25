@@ -63,8 +63,10 @@ function getName() {
 }
 
 function setName(e) {
-  if (e.type === 'keyup') {
+  if (name.textContent !== ''){
     localStorage.setItem('name', e.target.innerText);
+  }
+  if (e.type === 'keypress') {
     if (e.which == 13 || e.keyCode == 13) {
       localStorage.setItem('name', e.target.innerText);
       name.blur();
@@ -85,8 +87,10 @@ function getFocus() {
 }
 
 function setFocus(e) {
-  if (e.type === 'keypress') {
+  if (focus.textContent !== ''){
     localStorage.setItem('focus', e.target.innerText);
+  }
+  if (e.type === 'keypress') {
     if (e.which == 13 || e.keyCode == 13) {
       localStorage.setItem('focus', e.target.innerText);
       focus.blur();
