@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 20px;
+  font-family: 'Oxygen Mono', Courier, monospace;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -999;
+  background: radial-gradient(ellipse at center 55%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 70%);
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 5%;
+}
+
+.time{
+  font-size: 6rem;
+  font-family: 'Major Mono Display', Courier, monospace;
+  font-weight: 900;
+
+}
+
+.date {
+  font-size: 3rem;
+  font-family: 'Major Mono Display', Courier, monospace;
+}
+
+h1 {
+  margin: 5vh 0;
+}
+
+h2 {
+  margin: 5vh 0;
+}

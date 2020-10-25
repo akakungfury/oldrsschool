@@ -2,15 +2,35 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-    <title>Momentum</title>
+  <title>Momentum</title>
 </head>
 
 <body>
+  <div class="wrapper">
 
+    <time>
+      <p class="time"></p>
+      <p class="date"></p>
+    </time>
+
+    <h1>
+      <span class="greeting"></span>
+      <span class="name" contenteditable="true"></span>
+    </h1>
+
+    <h2>What Is Your Focus For Today?
+    </h2>
+    <h2 class="focus" contenteditable="true"></h2>
+
+  </div>
+  <div class="overlay"></div>
+  <script src="script.js"></script>
 </body>
 </html>
