@@ -34,24 +34,30 @@ function addZero(n) {
 function setBgGreet() {
   let today = new Date();
   let hour = today.getHours();
+  let imgNumber;
 
   if (hour < 6) {
-    document.body.style.backgroundImage = "url('./assets/images/night/01.jpg')";
+    imgNumber = hour;
+    document.body.style.backgroundImage = `url('./assets/images/night/${imgNumber}.jpg')`;
     greeting.textContent = 'Good Night, ';
     document.body.style.color = 'white';
   } else if (hour < 12) {
-    document.body.style.backgroundImage = "url('./assets/images/morning/01.jpg')";
+    imgNumber = hour - 6;
+    document.body.style.backgroundImage = `url('./assets/images/morning/${imgNumber}.jpg')`;
     greeting.textContent = 'Good Morning, ';
     document.body.style.color = '#faff00';
   } else if (hour < 18) {
-    document.body.style.backgroundImage = "url('./assets/images/day/01.jpg')";
+    imgNumber = hour - 12;
+    document.body.style.backgroundImage = `url('./assets/images/day/${imgNumber}.jpg')`;
     greeting.textContent = 'Good Afternoon, ';
     document.body.style.color = '#faff00';
   } else {
-    document.body.style.backgroundImage = "url('./assets/images/evening/01.jpg')";
+    imgNumber = hour - 18;
+    document.body.style.backgroundImage = `url('./assets/images/evening/${imgNumber}.jpg')`;
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = '#faff00';
   }
+  setTimeout(showDate, 1000);
 }
 
 function getName() {
@@ -114,6 +120,52 @@ function updateInputAfterBlur(e) {
   }
 }
 
+const left_arrow_btn = document.querySelector('.button__arrow-left');
+const right_arrow_btn = document.querySelector('.button__arrow-right');
+let today = new Date();
+let hour = today.getHours();
+
+const getPartOfDay = (hour) => {
+  let partOfDayNumber = Math.trunc(hour / 6);
+
+  switch (true) {
+    case partOfDayNumber === 0: return 'night';
+    case partOfDayNumber === 1: return 'morning';
+    case partOfDayNumber === 2: return 'day';
+    case partOfDayNumber === 3: return 'evening';
+  }
+}
+
+let getCurrHourOfPart = (hour) => hour % 6;
+
+
+let partOfDay = getPartOfDay(hour);
+let currHourOfPart= getCurrHourOfPart(hour);
+
+function changeBackground(e){
+  let backGroundUrl;
+
+  if (e.target.classList.contains('button__arrow-left')) {
+    if (currHourOfPart === 0) {
+      currHourOfPart = 5;
+      backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
+    } else {
+      backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart - 1}.jpg')`;
+      currHourOfPart --;
+    }
+  } else {
+    if (currHourOfPart === 5) {
+      currHourOfPart = 0;
+      backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
+    } else {
+      backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart + 1}.jpg')`;
+      currHourOfPart ++;
+    }
+  }
+
+  document.body.style.backgroundImage = backGroundUrl;
+}
+
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 name.addEventListener('focus', clearInputOnFocus)
@@ -122,6 +174,8 @@ focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 focus.addEventListener('focus', clearInputOnFocus)
 focus.addEventListener('blur', updateInputAfterBlur)
+left_arrow_btn.addEventListener('click', changeBackground);
+right_arrow_btn.addEventListener('click', changeBackground);
 
 showTime();
 showDate();
