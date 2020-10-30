@@ -59,7 +59,7 @@ h1 {
   flex-wrap: wrap;
 }
 
-h1>span:nth-of-type(2) {
+h1>span:nth-of-type(2):focus {
   min-width: 30%;
 }
 
@@ -68,9 +68,9 @@ h2 {
   margin: 2vh 0;
 }
 
-h1 > span {
+/* h1 > span {
   min-width: 10%;
-}
+} */
 
 .focus:hover::after {
   height: 1.5rem;
