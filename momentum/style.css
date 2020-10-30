@@ -80,12 +80,14 @@ h1 > span {
   content: '...';
   position: absolute;
   line-height: 3.5rem;
+  transition: all .3s linear;
 }
 
 .focus:hover,
 .name:hover {
   cursor: pointer;
   transform: scale(1.015);
+  transition: all .3s linear;
 }
 
 .focus:focus,
@@ -123,14 +125,17 @@ h1 > span {
   border: 1px solid black;
   outline: none;
   transform: scale(1.1);
+  transition: all .3s linear;
 }
 
-.left-arrow__button:hover {
-  transform: translate(-5px, 0);
+.button__arrow-left:hover {
+  transform: translate(-3px, 0);
+  transition: all .2s ease;
 }
 
-.right-arrow__button:hover {
-  transform: translate(5px, 0);
+.button__arrow-right:hover {
+  transform: translate(3px, 0);
+  transition: all .2s linear;
 }
 
 .button:focus {
