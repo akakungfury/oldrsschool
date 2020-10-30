@@ -143,7 +143,15 @@ let partOfDay = getPartOfDay(hour);
 let currHourOfPart= getCurrHourOfPart(hour);
 const partsOfDay = ['night', 'morning', 'day', 'evening']
 
-function changeBackground(e){
+function changeBackground(src) {
+  const img = document.createElement('img');
+  img.src = src;
+  img.onload = () => {
+    document.body.style.backgroundImage = `url(${src})`;
+  };
+}
+
+function switchBackground(e){
   let currentPartIndex;
   let backGroundUrl;
 
@@ -153,8 +161,10 @@ function changeBackground(e){
       currentPartIndex = partsOfDay.findIndex(el => el === partOfDay)
       currentPartIndex === 0 ? partOfDay = partsOfDay[3] : partOfDay = partsOfDay[currentPartIndex - 1]
 
+      backGroundSrc =`./assets/images/${partOfDay}/${currHourOfPart}.jpg`;
       backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
     } else {
+      backGroundSrc = `./assets/images/${partOfDay}/${currHourOfPart - 1}.jpg`;
       backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart - 1}.jpg')`;
       currHourOfPart --;
     }
@@ -164,14 +174,16 @@ function changeBackground(e){
       currentPartIndex = partsOfDay.findIndex(el => el === partOfDay)
       currentPartIndex === 3 ? partOfDay = partsOfDay[0] : partOfDay = partsOfDay[currentPartIndex + 1]
 
+      backGroundSrc =`./assets/images/${partOfDay}/${currHourOfPart}.jpg`;
       backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
     } else {
+      backGroundSrc = `./assets/images/${partOfDay}/${currHourOfPart + 1}.jpg`;
       backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart + 1}.jpg')`;
       currHourOfPart ++;
     }
   }
 
-  document.body.style.backgroundImage = backGroundUrl;
+  changeBackground(backGroundSrc);
 }
 
 const next_advice_btn = document.querySelector('.button__next-advice');
@@ -249,8 +261,8 @@ focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 focus.addEventListener('focus', clearInputOnFocus)
 focus.addEventListener('blur', updateInputAfterBlur)
-left_arrow_btn.addEventListener('click', changeBackground);
-right_arrow_btn.addEventListener('click', changeBackground);
+left_arrow_btn.addEventListener('click', switchBackground);
+right_arrow_btn.addEventListener('click', switchBackground);
 next_advice_btn.addEventListener('click', getFact);
 
 showTime();
