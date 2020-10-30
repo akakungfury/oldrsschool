@@ -10,7 +10,6 @@ html {
 }
 
 body {
-
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -21,20 +20,23 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   z-index: -999;
   background: radial-gradient(ellipse at center 50%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0) 75%);
 }
 
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
+.background-container {
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   justify-content: space-between;
+  height: 100%;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .time{
@@ -55,6 +57,10 @@ h1 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+h1>span:nth-of-type(2) {
+  min-width: 30%;
 }
 
 h2 {
@@ -153,13 +159,13 @@ h1 > span {
 }
 
 @media only screen and (max-width: 768px){
-  .wrapper {
+  .background-container {
     padding: 10px 20px;
   }
 }
 
 @media only screen and (max-width: 450px){
-  .wrapper {
+  .background-container {
     padding: 5px 10px;
     align-items: center;
   }
@@ -175,7 +181,7 @@ h1 > span {
 }
 
 @media only screen and (max-width: 375px){
-  .wrapper {
+  .background-container {
     padding: 5px 10px;
   }
 
@@ -233,6 +239,10 @@ h1 > span {
   display: flex;
   flex-direction: column;
   height: 200px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  width: fit-content;
+  padding: 5px;
 }
 
 .advice__container>h2 {
@@ -259,6 +269,10 @@ h1 > span {
   padding: 0 3px;
 }
 
+.button:hover {
+  transform: scale(1.05);
+}
+
 .main__container {
   margin-top: 3vh;
   text-align: center;
@@ -270,12 +284,42 @@ h1 > span {
 }
 
 .weather{
+  color: #fff;
   background-color: rgba(0, 0, 0, 0.3);
   padding: 5px;
+  min-height: 13.6%;
+  min-width: 21%;
 }
 
 .weather__icon {
   line-height: 2rem;
   transform: scale(2) translate(4px,2px);
+}
 
+.weather__city {
+  cursor: pointer;
+  margin-bottom: 5px;
+  min-width: 100px;
+}
+
+.weather__city:hover:after {
+  font-size: 0.5rem;
+  content: '...';
+  position: absolute;
+  line-height: 1.5rem;
+  transition: all .3s linear;
+}
+
+.weather__city:hover {
+  background-color: rgba(255,255,255, 1);
+  color: black;
+  transition: all .3s linear;
+}
+
+.weather__city:focus {
+  outline: none;
+}
+
+.weather__city:focus:after {
+  content: '';
 }

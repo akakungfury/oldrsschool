@@ -215,8 +215,8 @@ async function getWeather() {
     wind_speed.textContent = `Wind speed: ${data.wind.speed} m/s`;
     humidity.textContent = `Main humidity: ${data.main.humidity} %`;
   } else {
-    weatherIcon.className = 'weather-icon owf';
-    city.textContent = 'try one more time';
+    weather_icon.className = 'weather-icon owf';
+    city.textContent = "Can't find this City!";
     temperature.textContent = '';
     wind_speed.textContent = '';
     humidity.textContent = '';
