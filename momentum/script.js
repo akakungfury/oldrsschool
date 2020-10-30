@@ -174,6 +174,17 @@ function changeBackground(e){
   document.body.style.backgroundImage = backGroundUrl;
 }
 
+const next_advice_btn = document.querySelector('.button__next-advice');
+
+async function getFact() {
+  const url = 'https://api.chucknorris.io/jokes/random';
+  const response = await fetch(url);
+  const advice = await response.json();
+
+  document.querySelector('.advice').textContent = `"${advice.value}"`;
+}
+
+document.addEventListener('DOMContentLoaded', getFact);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 name.addEventListener('focus', clearInputOnFocus)
@@ -184,6 +195,7 @@ focus.addEventListener('focus', clearInputOnFocus)
 focus.addEventListener('blur', updateInputAfterBlur)
 left_arrow_btn.addEventListener('click', changeBackground);
 right_arrow_btn.addEventListener('click', changeBackground);
+next_advice_btn.addEventListener('click', getFact);
 
 showTime();
 showDate();

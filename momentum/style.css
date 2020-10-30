@@ -10,11 +10,7 @@ html {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -35,6 +31,10 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-evenly;
 }
 
 .time{
@@ -51,7 +51,7 @@ body {
 
 h1 {
   font-size: 2rem;
-  margin: 5vh 0;
+  margin: 4vh 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -59,7 +59,7 @@ h1 {
 
 h2 {
   font-size: 1.5rem;
-  margin: 5vh 0;
+  margin: 2vh 0;
 }
 
 h1 > span {
@@ -161,6 +161,7 @@ h1 > span {
 @media only screen and (max-width: 450px){
   .wrapper {
     padding: 10px;
+    align-items: center;
   }
 
   .time{
@@ -209,4 +210,52 @@ h1 > span {
     position: absolute;
     line-height: 1.75rem;
   }
+
+  .advice__container {
+    font-size: .7rem;
+    width: 100%;
+    text-align: center;
+    min-height: 200px;
+  }
+
+  .button__next-advice {
+    margin: 0 auto;
+  }
+}
+
+.advice__container {
+  display: flex;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+
+.advice__container>h2 {
+  margin: 1vh 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.advice {
+  margin: 1vh 0;
+}
+
+.advice__container>button {
+  display: inline-block;
+}
+
+.button__next-advice {
+  font-size: 1rem;
+  width: fit-content;
+  min-height: 1.5rem;
+  height: 1.5rem;
+  border-radius: 5%;
+  padding: 0 3px;
+}
+
+.main__container {
+  margin-top: 15vh;
+  text-align: center;
 }
