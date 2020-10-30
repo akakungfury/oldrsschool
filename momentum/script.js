@@ -141,13 +141,18 @@ let getCurrHourOfPart = (hour) => hour % 6;
 
 let partOfDay = getPartOfDay(hour);
 let currHourOfPart= getCurrHourOfPart(hour);
+const partsOfDay = ['night', 'morning', 'day', 'evening']
 
 function changeBackground(e){
+  let currentPartIndex;
   let backGroundUrl;
 
   if (e.target.classList.contains('button__arrow-left')) {
     if (currHourOfPart === 0) {
       currHourOfPart = 5;
+      currentPartIndex = partsOfDay.findIndex(el => el === partOfDay)
+      currentPartIndex === 0 ? partOfDay = partsOfDay[3] : partOfDay = partsOfDay[currentPartIndex - 1]
+
       backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
     } else {
       backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart - 1}.jpg')`;
@@ -156,6 +161,9 @@ function changeBackground(e){
   } else {
     if (currHourOfPart === 5) {
       currHourOfPart = 0;
+      currentPartIndex = partsOfDay.findIndex(el => el === partOfDay)
+      currentPartIndex === 3 ? partOfDay = partsOfDay[0] : partOfDay = partsOfDay[currentPartIndex + 1]
+
       backGroundUrl =`url('./assets/images/${partOfDay}/${currHourOfPart}.jpg')`;
     } else {
       backGroundUrl = `url('./assets/images/${partOfDay}/${currHourOfPart + 1}.jpg')`;
