@@ -184,7 +184,63 @@ async function getFact() {
   document.querySelector('.advice').textContent = `"${advice.value}"`;
 }
 
+const city = document.querySelector('.weather__city');
+const weather_icon = document.querySelector('.weather__icon');
+const temperature = document.querySelector('.weather__temperature');
+const wind_speed = document.querySelector('.weather__wind-speed');
+const humidity = document.querySelector('.weather__humidity');
+
+
+async function getWeather() {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=4ce08b24d7a583344bff7ce65535559d&units=metric`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (response.ok) {
+    weather_icon.className = 'weather__icon owf';
+    weather_icon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${data.main.temp} °C`;
+    wind_speed.textContent = `Wind speed: ${data.wind.speed} m/s`;
+    humidity.textContent = `Main humidity: ${data.main.humidity} %`;
+  } else {
+    weatherIcon.className = 'weather-icon owf';
+    city.textContent = 'try one more time';
+    temperature.textContent = '';
+    wind_speed.textContent = '';
+    humidity.textContent = '';
+  }
+}
+
+function getCity() {
+  if (localStorage.getItem('city') === null) {
+    city.textContent = 'Minsk';
+  } else {
+    city.textContent = localStorage.getItem('city');
+  }
+}
+
+function setCity(e) {
+  if (e.code === 'Enter' || e.type === 'blur') {
+    if (e.target.innerText.trim() === '') {
+      if (localStorage.getItem('city') === null) {
+        city.textContent = 'Minsk';
+        city.blur();
+      } else {
+        city.textContent = localStorage.getItem('city');
+        city.blur();
+      }
+    } else {
+      localStorage.setItem('city', e.target.innerText);
+      getWeather();
+      city.blur();
+    }
+  }
+}
+
+city.addEventListener('keypress', setCity);
+city.addEventListener('blur', setCity);
 document.addEventListener('DOMContentLoaded', getFact);
+document.addEventListener('DOMContentLoaded', getWeather);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 name.addEventListener('focus', clearInputOnFocus)
@@ -202,3 +258,4 @@ showDate();
 setBgGreet();
 getName();
 getFocus();
+getCity()

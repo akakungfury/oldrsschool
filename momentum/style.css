@@ -30,11 +30,11 @@ body {
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 20px 40px;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .time{
@@ -154,13 +154,13 @@ h1 > span {
 
 @media only screen and (max-width: 768px){
   .wrapper {
-    padding: 20px;
+    padding: 10px 20px;
   }
 }
 
 @media only screen and (max-width: 450px){
   .wrapper {
-    padding: 10px;
+    padding: 5px 10px;
     align-items: center;
   }
 
@@ -176,7 +176,7 @@ h1 > span {
 
 @media only screen and (max-width: 375px){
   .wrapper {
-    padding: 10px;
+    padding: 5px 10px;
   }
 
   .time{
@@ -218,6 +218,10 @@ h1 > span {
     min-height: 200px;
   }
 
+  .weather__container {
+    font-size: .7rem;
+  }
+
   .button__next-advice {
     margin: 0 auto;
   }
@@ -256,6 +260,22 @@ h1 > span {
 }
 
 .main__container {
-  margin-top: 15vh;
+  margin-top: 3vh;
   text-align: center;
+}
+
+.weather__container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.weather{
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+.weather__icon {
+  line-height: 2rem;
+  transform: scale(2) translate(4px,2px);
+
 }
