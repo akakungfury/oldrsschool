@@ -51,8 +51,10 @@ keyboard.generateKeyboard(contentWrapper);
 const capsLockKey = document.querySelector('[data-which="20"]');
 keyboard.toggleCapsLockModifier(capsLockKey, contentWrapper);
 
-const shiftKey = document.querySelector('[data-which="16"]');
-keyboard.toggleShiftModifier(shiftKey, contentWrapper);
+const leftShiftKey = document.querySelectorAll('[data-which="16"]')[0];
+const rightShiftKey = document.querySelectorAll('[data-which="16"]')[1];
+keyboard.toggleShiftModifier(leftShiftKey, contentWrapper);
+keyboard.toggleShiftModifier(rightShiftKey, contentWrapper);
 
 keyboard.switchKeyboardLanguage(contentWrapper);
 

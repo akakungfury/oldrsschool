@@ -84,7 +84,7 @@ const enKeyboardLayout = [
       eWhich: 221, eCode: 'BracketRight', eKey: ']', eKeyShift: '}',
     },
     {
-      eWhich: 220, eCode: 'backslash', eKey: '\\', eKeyShift: '|',
+      eWhich: 220, eCode: 'Backslash', eKey: '\\', eKeyShift: '|',
     },
     {
       eWhich: 46, eCode: 'Delete', eKey: 'Del', eKeyShift: 'Del',
@@ -289,7 +289,7 @@ const ruKeyboardLayout = [
       eWhich: 221, eCode: 'BracketRight', eKey: 'ъ', eKeyShift: 'Ъ',
     },
     {
-      eWhich: 220, eCode: 'backslash', eKey: '\\', eKeyShift: '/',
+      eWhich: 220, eCode: 'Backslash', eKey: '\\', eKeyShift: '/',
     },
     {
       eWhich: 46, eCode: 'Delete', eKey: 'Del', eKeyShift: 'Del',
@@ -491,7 +491,7 @@ const enKeys = [
       eWhich: 221, eCode: 'BracketRight', eKey: ']', eKeyShift: '}',
     },
     {
-      eWhich: 220, eCode: 'backslash', eKey: '\\', eKeyShift: '|',
+      eWhich: 220, eCode: 'Backslash', eKey: '\\', eKeyShift: '|',
     },
     {
       eWhich: 46, eCode: 'Delete', eKey: 'Del', eKeyShift: 'Del',
@@ -686,7 +686,7 @@ const ruKeys = [
       eWhich: 221, eCode: 'BracketRight', eKey: 'ъ', eKeyShift: 'Ъ',
     },
     {
-      eWhich: 220, eCode: 'backslash', eKey: '\\', eKeyShift: '/',
+      eWhich: 220, eCode: 'Backslash', eKey: '\\', eKeyShift: '/',
     },
     {
       eWhich: 46, eCode: 'Delete', eKey: 'Del', eKeyShift: 'Del',

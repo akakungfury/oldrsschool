@@ -155,16 +155,23 @@ export default class Keybord {
     const keyboardLayout = this.keysValues;
     keyboardLayout.forEach((keyData) => {
       switch (true) {
-        case modifier === 'caps':
-          if (keyData.eCode.includes('Key')) {
+        case modifier === 'caps': {
+          /* this array need for additional check: for which key need change displayed value
+          if 'Caps' is activated for russian language */
+          const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          if (keyData.eCode.includes('Key') || (this.lang === 'ru' && arr.includes(keyData.eCode) === true)) {
             if (this.capsLockOn) {
               document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
             }
             if (!this.capsLockOn) {
               document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+              if (this.lang === 'ru' && arr.includes(keyData.eCode) === true) {
+                document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+              }
             }
           }
           break;
+        }
         case modifier === 'shift':
           if (this.shiftPressed) {
             document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
@@ -240,7 +247,10 @@ export default class Keybord {
         if (this.shiftPressed) {
           this.modifyTextareaValue(keyCode, keyShiftVal, textarea);
         } else if (this.capsLockOn) {
-          if (keyCode.includes('Key')) {
+          /* this array need for additional check: for which key need change output value
+          if 'Caps' is activated for russian language */
+          const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          if (keyCode.includes('Key') || (this.lang === 'ru' && arr.includes(keyCode) === true)) {
             this.modifyTextareaValue(keyCode, keyShiftVal, textarea);
           } else {
             this.modifyTextareaValue(keyCode, keyVal, textarea);
@@ -268,27 +278,40 @@ export default class Keybord {
 
     window.addEventListener('keydown', (event) => {
       event.preventDefault();
-      virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
-      virtualBtn.classList.add('clicked');
+      if (event.code === 'ShiftRight' || event.code === 'ControlRight' || event.code === 'AltRight') {
+        virtualBtn = document.querySelectorAll(`[data-which="${event.which}"]`)[1];
+      } else {
+        virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
+      }
+      if (virtualBtn !== null) virtualBtn.classList.add('clicked');
     });
 
     window.addEventListener('keyup', (event) => {
       event.preventDefault();
-      textarea.blur();
-      virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
-      virtualBtn.classList.remove('clicked');
-      const keyVal = this.keysValues.find((key) => key.eCode === event.code).eKey;
-      const keyShiftVal = this.keysValues.find((key) => key.eCode === event.code).eKeyShift;
-      if (this.shiftPressed) {
-        this.modifyTextareaValue(event.code, keyShiftVal, textarea);
-      } else if (this.capsLockOn) {
-        if (event.code.includes('Key')) {
+      if (event.code === 'ShiftRight' || event.code === 'ControlRight' || event.code === 'AltRight') {
+        virtualBtn = document.querySelectorAll(`[data-which="${event.which}"]`)[1];
+      } else {
+        virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
+      }
+      if (virtualBtn !== null) {
+        textarea.blur();
+        virtualBtn.classList.remove('clicked');
+        const keyVal = this.keysValues.find((key) => key.eCode === event.code).eKey;
+        const keyShiftVal = this.keysValues.find((key) => key.eCode === event.code).eKeyShift;
+        if (this.shiftPressed) {
           this.modifyTextareaValue(event.code, keyShiftVal, textarea);
+        } else if (this.capsLockOn) {
+          /* this array need for additional check: for which key need change output value
+          if 'Caps' is activated for russian language */
+          const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          if (event.code.includes('Key') || (this.lang === 'ru' && arr.includes(event.code) === true)) {
+            this.modifyTextareaValue(event.code, keyShiftVal, textarea);
+          } else {
+            this.modifyTextareaValue(event.code, keyVal, textarea);
+          }
         } else {
           this.modifyTextareaValue(event.code, keyVal, textarea);
         }
-      } else {
-        this.modifyTextareaValue(event.code, keyVal, textarea);
       }
     });
   }
