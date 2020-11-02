@@ -12,6 +12,7 @@ export default class Key {
     const button = document.createElement('div');
     const keyValue = document.createTextNode(`${this.eKey}`);
     button.className = 'keyboard__key';
+    button.setAttribute('data-which', `${this.eWhich}`);
 
     button.append(keyValue);
     switch (true) {
