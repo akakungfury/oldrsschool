@@ -27,6 +27,7 @@ body {
   resize: none;
   width: 100%;
   margin: 10px auto;
+  font-size: 1.2rem;
 }
 
 .keyboard {
@@ -84,4 +85,14 @@ body {
 
 .keyboard__key:hover {
   border: 1px solid aquamarine;
+}
+
+.description {
+  padding: 10px;
+  border-radius: 5px;
+  /* border: 1px solid #000; */
+  font-size: 1.5rem;
+  resize: none;
+  width: 100%;
+  margin: 10px auto;
 }

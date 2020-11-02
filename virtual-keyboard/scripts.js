@@ -1,5 +1,4 @@
-import { enKeysLayout } from './src/data.js';
-import Key from './src/key.js';
+import Keybord from './src/keyboard.js';
 
 function generateBodyElements() {
   const generateWrapper = () => {
@@ -27,68 +26,35 @@ function generateBodyElements() {
     const textarea = document.createElement('textarea');
 
     textarea.className = 'textarea';
-    textarea.setAttribute('rows', '10');
+    textarea.setAttribute('rows', '13');
     wrapper.append(textarea);
   };
   generateTextarea();
 
-  const generateKeyboard = () => {
-    const keyboard = document.createElement('div');
-    keyboard.className = 'keyboard';
-    wrapper.append(keyboard);
-    enKeysLayout.forEach((row, i) => {
-      const keyboardRow = document.createElement('div');
-      keyboardRow.className = 'keyboard__row';
-      keyboardRow.id = `row_${i + 1}`;
-      row.forEach((keyData) => {
-        const key = new Key(keyData);
-        const button = key.generateKey();
-        keyboardRow.append(button);
-      });
-      keyboard.append(keyboardRow);
-    });
-  };
+  const generateDescription = () => {
+    const description = document.createElement('div');
+    const descriptionText = document.createTextNode('Switch a keyboard: CTRL + ALT');
 
-  generateKeyboard();
+    description.className = 'description';
+    wrapper.append(description);
+    description.appendChild(descriptionText);
+  };
+  generateDescription();
 }
 generateBodyElements();
 
-function addAnimationForKey(el) {
-  el.classList.add('clicked');
-  setTimeout(() => el.classList.remove('clicked'), 250);
-}
+const contentWrapper = document.body.querySelector('.wrapper');
 
-function editTextIntoTextarea(key, keyWhich = undefined) {
-  let which = keyWhich;
-  if (which === undefined) {
-    which = key.getAttribute('data-which');
-  }
-  const keyboardRowId = key.parentElement.id;
-  const rowNumber = keyboardRowId.split('_')[1];
-  const keyValue = enKeysLayout[rowNumber - 1].find((el) => el.eWhich == which).eKey;
+const keyboard = new Keybord();
+keyboard.generateKeyboard(contentWrapper);
 
-  document.querySelector('textarea').value += keyValue.toString();
-}
+const capsLockKey = document.querySelector('[data-which="20"]');
+keyboard.toggleCapsLockModifier(capsLockKey, contentWrapper);
 
-function addCLickKeyHandler() {
-  const keys = document.querySelectorAll('.keyboard__key');
+const shiftKey = document.querySelector('[data-which="16"]');
+keyboard.toggleShiftModifier(shiftKey, contentWrapper);
 
-  keys.forEach((el) => {
-    el.addEventListener('mousedown', (event) => {
-      const key = event.target;
-      addAnimationForKey(key);
-      editTextIntoTextarea(key);
-    });
-  });
-}
-addCLickKeyHandler();
+keyboard.switchKeyboardLanguage(contentWrapper);
 
-function addPressKeyHandler() {
-  window.addEventListener('keydown', (event) => {
-    const { which } = event;
-    const key = document.querySelector(`[data-which="${which}"]`);
-    addAnimationForKey(key);
-    editTextIntoTextarea(key);
-  });
-}
-addPressKeyHandler();
+keyboard.addHandlerForPhysicalKeys();
+keyboard.addHandlerForVirtualKeys();
