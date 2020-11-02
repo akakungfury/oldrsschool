@@ -230,6 +230,12 @@ export default class Keybord {
           btn.classList.remove('clicked');
         } else {
           btn.classList.add('clicked');
+          btn.addEventListener('mouseout', () => {
+            if (which == '20') {
+              return;
+            }
+            btn.classList.remove('clicked');
+          });
         }
         if (this.shiftPressed) {
           this.modifyTextareaValue(keyCode, keyShiftVal, textarea);

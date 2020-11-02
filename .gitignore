@@ -84,3 +84,6 @@ static/src/stylesheets/pasteup/.npmrc
 
 # SCSS(for projects requiring only .css styles inside the project directory)
 **/*.scss
+
+package-lock.json
+
