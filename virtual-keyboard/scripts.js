@@ -46,6 +46,8 @@ keyboard.toggleShiftModifier(leftShiftKey, contentWrapper);
 keyboard.toggleShiftModifier(rightShiftKey, contentWrapper);
 
 keyboard.switchKeyboardLanguage();
+keyboard.switchKeyboardLanguageUsingVirtualBtn();
+keyboard.addHandlerForAdditionalVirtualKeys();
 
 keyboard.addHandlerForPhysicalKeys();
 keyboard.addHandlerForVirtualKeys();

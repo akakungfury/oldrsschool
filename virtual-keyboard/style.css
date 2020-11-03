@@ -31,7 +31,7 @@ body {
   border-radius: 5px;
   resize: none;
   width: 100%;
-  margin: 10px 0;
+  margin: 10px 0 5px;
   font-size: 1.5rem;
 }
 
@@ -58,6 +58,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 0;
+  width: 5%;
 }
 
 .keyboard__row {
@@ -71,6 +72,19 @@ body {
   height: 4.5rem;
   width: 4.5%;
   margin: 1% 0;
+  line-height: 4.5rem;
+  text-align: center;
+  background-color: rgb(48, 48, 48);
+  color: aquamarine;
+  border-radius: .3rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.keyboard__additional-key {
+  font-size: 2rem;
+  width: 4.5%;
+  /* margin: 1% 0; */
   line-height: 4.5rem;
   text-align: center;
   background-color: rgb(48, 48, 48);
@@ -101,7 +115,12 @@ body {
   height: 70px;
   writing-mode: vertical-lr;
   text-orientation: upright;
-  width: fit-content;
+  width: 100%;
+}
+
+.keyboard__key-vertical:first-of-type {
+  writing-mode: inherit;
+  text-orientation: inherit;
 }
 
 .clicked,
@@ -117,16 +136,17 @@ body {
 }
 
 .keyboard__key-vertical:hover {
-  margin: 0 -1px;
+  box-sizing: content-box;
+  border: 1px solid aquamarine;
+  margin: -1px;
 }
 
 .description {
-  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 1.5rem;
-  resize: none;
+  font-size: 2rem;
   width: 100%;
-  margin: 10px auto;
+  margin: 10px auto 15px;
 }
 
 .btn-show-hide {
@@ -165,6 +185,16 @@ body {
 
 #show_hide:checked ~ .keyboard {
   display: flex;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 5px;
+}
+
+li {
+  font-size: 1.7rem;
+  list-style-position: inside;
 }
 
 @media screen and (max-width: 768px) {

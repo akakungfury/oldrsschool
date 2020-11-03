@@ -37,7 +37,6 @@ export default class Keybord {
         event.preventDefault();
         this.capsLockOn = true;
         this.switchKeyboardLayout('caps');
-        // this.addHandlerForPhKeys(this.capsLockOn);
       }
     });
     window.addEventListener('keyup', (event) => {
@@ -45,26 +44,11 @@ export default class Keybord {
         event.preventDefault();
         this.capsLockOn = false;
         this.switchKeyboardLayout('caps');
-        // this.addHandlerForPhKeys(this.capsLockOn);
       }
     });
   }
 
   toggleShiftModifier(button) {
-  //   // handler for virtual "Shift" btn
-  //   button.addEventListener('mousedown', () => {
-  //     this.shiftPressed = true;
-  //     this.switchKeyboardLayout('shift');
-  //   });
-  //   button.addEventListener('mouseup', () => {
-  //     this.shiftPressed = false;
-  //     this.switchKeyboardLayout('shift');
-  //     // if "CapsLock" is active buttons with letters stay upper case
-  //     if (this.capsLockOn) {
-  //       this.switchKeyboardLayout('caps');
-  //     }
-  //   });
-
     button.addEventListener('click', () => {
       if (this.shiftPressed) {
         this.shiftPressed = false;
@@ -96,10 +80,10 @@ export default class Keybord {
     });
   }
 
-  switchKeyboardLanguage() {
+  switchKeyboardLanguage(e) {
     let keysPressed = {
       ctrl: false,
-      alt: false
+      alt: false,
     };
 
     const checkPressedBtns = () => {
@@ -116,6 +100,7 @@ export default class Keybord {
         keysPressed.ctrl = false;
         keysPressed.alt = false;
         this.switchKeyboardLayout('lang');
+        document.querySelector('[data-which="switchLanguage"]').textContent = this.lang;
       }
     };
 
@@ -144,6 +129,21 @@ export default class Keybord {
       if (eventForCtrlBtn.which === 17) {
         keysPressed.alt = false;
       }
+    });
+  }
+
+  switchKeyboardLanguageUsingVirtualBtn() {
+    document.querySelector('[data-which="switchLanguage"]').addEventListener('click', () => {
+      if (this.lang === 'en') {
+        this.lang = 'ru';
+        localStorage.lang = 'ru';
+        this.keysValues = ruKeys;
+      } else {
+        this.lang = 'en';
+        localStorage.lang = 'en';
+        this.keysValues = enKeys;
+      }
+      this.switchKeyboardLayout('lang');
     });
   }
 
@@ -241,10 +241,7 @@ export default class Keybord {
               case which == '16':
                 break;
               default:
-            // if (which == '20') {
-            //   return;
-            // }
-            btn.classList.remove('clicked');
+                btn.classList.remove('clicked');
             }
           });
         }
@@ -275,6 +272,34 @@ export default class Keybord {
           default:
             btn.classList.remove('clicked');
         }
+      });
+    });
+  }
+
+  addHandlerForAdditionalVirtualKeys() {
+    const additionalVirtualBtns = document.querySelectorAll('.keyboard__additional-key');
+
+    additionalVirtualBtns.forEach((btn) => {
+      btn.addEventListener('mousedown', () => {
+        if (btn.classList.contains('clicked')) {
+          btn.classList.remove('clicked');
+        } else {
+          btn.classList.add('clicked');
+          if (btn.dataset.which === 'switchLanguage') {
+            btn.addEventListener('mouseup', () => {
+              btn.classList.remove('clicked');
+            });
+            btn.addEventListener('mouseout', () => {
+              btn.classList.remove('clicked');
+            });
+          }
+        }
+      });
+    });
+
+    additionalVirtualBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.dataset.which === 'switchLanguage') btn.textContent = this.lang;
       });
     });
   }

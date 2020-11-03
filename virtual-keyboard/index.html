@@ -21,7 +21,14 @@
     <button class="btn-show-hide"></button>
 
     <textarea class="textarea" rows="13"></textarea>
-    <div class="description">Switch a keyboard: CTRL + ALT</div>
+    <div class="description">
+      <h2>Приветствую! Приложение делалось из под macos, надеюсь не будет несостыковок.</h2>
+      <ul>
+        <li>"Язык" и "вкл/выкл отображение клавиатуры"(кнопка сверху) сохраняется в localStorage, так что при обновление страницы все будет как до обновления.</li>
+        <li>C вирутальной клавиатуры язык переключается клавишей "en/ru" в правом верхнем углу, а с физической клавиатуры сочетанием клавиш "CTRL + ALT"</li>
+        <li>C вирутальной клавиатуры "Shift" переключается как "Capslock", а на физической клаве как в реальности: зажимаем шифт и печатаем</li>
+      </ul>
+    </div>
 
     <div class="keyboard">
       <div class="keyboard__base-keys-container">
@@ -101,9 +108,9 @@
       </div>
     </div>
     <div class="keyboard__additional-keys-container">
-        <div class="keyboard__key keyboard__key-vertical" data-which="8">L</div>
-        <div class="keyboard__key keyboard__key-vertical" data-which="8">V</div>
-        <div class="keyboard__key keyboard__key-vertical" data-which="8">S</div>
+        <div class="keyboard__additional-key keyboard__key-vertical " data-which="switchLanguage">en</div>
+        <div class="keyboard__additional-key keyboard__key-vertical" data-which="8">V</div>
+        <div class="keyboard__additional-key keyboard__key-vertical" data-which="8">S</div>
     </div>
   </div>
 
