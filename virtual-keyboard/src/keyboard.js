@@ -3,34 +3,20 @@ import { enKeyboardLayout, ruKeyboardLayout, enKeys, ruKeys } from './data.js';
 
 export default class Keybord {
   constructor(shiftPressed = false, capsLockOn = false) {
+    this.isDisplayed = localStorage.getItem('keyboardDisplayState') || 'hide';
     this.lang = localStorage.getItem('lang') || 'en';
-    this.keyboardLayout = enKeyboardLayout;
     this.shiftPressed = shiftPressed;
     this.capsLockOn = capsLockOn;
-    this.keysValues = enKeys;
+    this.keysValues;
   }
 
-  generateKeyboard(wrapper) {
-    const keyboard = document.createElement('div');
-    keyboard.className = 'keyboard';
-    wrapper.append(keyboard);
+  applyKeyboardLanguage() {
     if (this.lang === 'en') {
-      this.keyboardLayout = enKeyboardLayout;
       this.keysValues = enKeys;
     } else {
-      this.keyboardLayout = ruKeyboardLayout;
       this.keysValues = ruKeys;
     }
-    this.keyboardLayout.forEach((row, i) => {
-      const keyboardRow = document.createElement('div');
-      keyboardRow.className = 'keyboard__row';
-      row.forEach((keyData) => {
-        const key = new Key(keyData);
-        const button = key.generateKey();
-        keyboardRow.append(button);
-      });
-      keyboard.append(keyboardRow);
-    });
+    this.switchKeyboardLayout('lang');
   }
 
   toggleCapsLockModifier(button) {
@@ -65,17 +51,27 @@ export default class Keybord {
   }
 
   toggleShiftModifier(button) {
-    // handler for virtual "Shift" btn
-    button.addEventListener('mousedown', () => {
-      this.shiftPressed = true;
-      this.switchKeyboardLayout('shift');
-    });
-    button.addEventListener('mouseup', () => {
-      this.shiftPressed = false;
-      this.switchKeyboardLayout('shift');
-      // if "CapsLock" is active buttons with letters stay upper case
-      if (this.capsLockOn) {
-        this.switchKeyboardLayout('caps');
+  //   // handler for virtual "Shift" btn
+  //   button.addEventListener('mousedown', () => {
+  //     this.shiftPressed = true;
+  //     this.switchKeyboardLayout('shift');
+  //   });
+  //   button.addEventListener('mouseup', () => {
+  //     this.shiftPressed = false;
+  //     this.switchKeyboardLayout('shift');
+  //     // if "CapsLock" is active buttons with letters stay upper case
+  //     if (this.capsLockOn) {
+  //       this.switchKeyboardLayout('caps');
+  //     }
+  //   });
+
+    button.addEventListener('click', () => {
+      if (this.shiftPressed) {
+        this.shiftPressed = false;
+        this.switchKeyboardLayout('shift');
+      } else {
+        this.shiftPressed = true;
+        this.switchKeyboardLayout('shift');
       }
     });
 
@@ -235,13 +231,21 @@ export default class Keybord {
         textarea.blur();
         if (which == '20' && btn.classList.contains('clicked')) {
           btn.classList.remove('clicked');
+        } else if (which == '16' && btn.classList.contains('clicked')) {
+          btn.classList.remove('clicked');
         } else {
           btn.classList.add('clicked');
           btn.addEventListener('mouseout', () => {
-            if (which == '20') {
-              return;
-            }
+            switch (true) {
+              case which == '20':
+              case which == '16':
+                break;
+              default:
+            // if (which == '20') {
+            //   return;
+            // }
             btn.classList.remove('clicked');
+            }
           });
         }
         if (this.shiftPressed) {
@@ -264,10 +268,13 @@ export default class Keybord {
     virtualBtns.forEach((btn) => {
       btn.addEventListener('mouseup', () => {
         const which = btn.getAttribute('data-which');
-        if (which == '20') {
-          return;
+        switch (true) {
+          case which == '20':
+          case which == '16':
+            break;
+          default:
+            btn.classList.remove('clicked');
         }
-        btn.classList.remove('clicked');
       });
     });
   }
