@@ -173,9 +173,27 @@ export default class Keybord {
         case modifier === 'shift':
           if (this.shiftPressed) {
             document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
+            if (this.capsLockOn) {
+              const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+              if (keyData.eCode.includes('Key') || (this.lang === 'ru' && arr.includes(keyData.eCode) === true)) {
+                document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+                if (this.lang === 'ru' && arr.includes(keyData.eCode) === true) {
+                  document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+                }
+              }
+            }
           }
           if (!this.shiftPressed) {
             document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+            if (this.capsLockOn) {
+              const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+              if (keyData.eCode.includes('Key') || (this.lang === 'ru' && arr.includes(keyData.eCode) === true)) {
+                document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
+                if (this.lang === 'ru' && arr.includes(keyData.eCode) === true) {
+                  document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
+                }
+              }
+            }
           }
           break;
         case modifier === 'lang':
@@ -276,6 +294,9 @@ export default class Keybord {
         }
       });
     });
+
+    const shiftBtns = document.querySelectorAll('[data-which="16"]');
+    const capsLockBtn = document.querySelector('[data-which="20"]');
   }
 
   switchVoiceEntering() {
