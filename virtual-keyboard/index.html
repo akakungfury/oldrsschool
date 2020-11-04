@@ -25,8 +25,9 @@
       <h2>Приветствую! Приложение делалось из под macos, надеюсь не будет несостыковок.</h2>
       <ul>
         <li>"Язык" и "вкл/выкл отображение клавиатуры"(кнопка сверху) сохраняется в localStorage, так что при обновление страницы все будет как до обновления.</li>
-        <li>C вирутальной клавиатуры язык переключается клавишей "en/ru" в правом верхнем углу, а с физической клавиатуры сочетанием клавиш "CTRL + ALT"</li>
+        <li>C вирутальной клавиатуры язык переключается клавишей "en/ru" в правом верхнем углу клавиатуры, а с физической клавиатуры сочетанием клавиш "CTRL + ALT"</li>
         <li>C вирутальной клавиатуры "Shift" переключается как "Capslock", а на физической клаве как в реальности: зажимаем шифт и печатаем</li>
+        <li>Голосовой ввод вкл. и выкл. клавишей "микрофона" расположенной по центру справой стороны клавиатуры. Язык ввода зависит от языка расскладки, так что можете попробовать оба вариант</li>
       </ul>
     </div>
 
@@ -108,9 +109,16 @@
       </div>
     </div>
     <div class="keyboard__additional-keys-container">
-        <div class="keyboard__additional-key keyboard__key-vertical " data-which="switchLanguage">en</div>
-        <div class="keyboard__additional-key keyboard__key-vertical" data-which="8">V</div>
-        <div class="keyboard__additional-key keyboard__key-vertical" data-which="8">S</div>
+        <div class="keyboard__additional-key keyboard__key-vertical" data-additional-which="switchLanguage">
+          <div class="div">en</div>
+          <img class="language-icon icon_default-color" src="./src/icons/language.svg" alt="language icon">
+        </div>
+        <div class="keyboard__additional-key keyboard__key-vertical" data-additional-which="voiceEntering">
+          <img class="microphone-icon icon_default-color" src="./src/icons/microphone.svg" alt="microphone icon">
+        </div>
+        <div class="keyboard__additional-key keyboard__key-vertical" data-additional-which="btnSounds">
+          <img class="sound-icon icon_default-color" src="./src/icons/volume.svg" alt="speaker icon">
+        </div>
     </div>
   </div>
 

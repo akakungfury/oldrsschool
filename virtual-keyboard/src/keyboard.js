@@ -8,6 +8,7 @@ export default class Keybord {
     this.shiftPressed = shiftPressed;
     this.capsLockOn = capsLockOn;
     this.keysValues;
+    this.isVoiceEnteringOn = false;
   }
 
   applyKeyboardLanguage() {
@@ -100,7 +101,7 @@ export default class Keybord {
         keysPressed.ctrl = false;
         keysPressed.alt = false;
         this.switchKeyboardLayout('lang');
-        document.querySelector('[data-which="switchLanguage"]').textContent = this.lang;
+        document.querySelector('[data-additional-which="switchLanguage"]').querySelector('div').textContent = this.lang;
       }
     };
 
@@ -133,7 +134,7 @@ export default class Keybord {
   }
 
   switchKeyboardLanguageUsingVirtualBtn() {
-    document.querySelector('[data-which="switchLanguage"]').addEventListener('click', () => {
+    document.querySelector('[data-additional-which="switchLanguage"]').addEventListener('click', (e) => {
       if (this.lang === 'en') {
         this.lang = 'ru';
         localStorage.lang = 'ru';
@@ -143,6 +144,7 @@ export default class Keybord {
         localStorage.lang = 'en';
         this.keysValues = enKeys;
       }
+      e.target.querySelector('div').textContent = this.lang;
       this.switchKeyboardLayout('lang');
     });
   }
@@ -276,31 +278,79 @@ export default class Keybord {
     });
   }
 
-  addHandlerForAdditionalVirtualKeys() {
-    const additionalVirtualBtns = document.querySelectorAll('.keyboard__additional-key');
+  switchVoiceEntering() {
+    const recognition = new webkitSpeechRecognition();
 
-    additionalVirtualBtns.forEach((btn) => {
-      btn.addEventListener('mousedown', () => {
-        if (btn.classList.contains('clicked')) {
-          btn.classList.remove('clicked');
-        } else {
-          btn.classList.add('clicked');
-          if (btn.dataset.which === 'switchLanguage') {
-            btn.addEventListener('mouseup', () => {
-              btn.classList.remove('clicked');
-            });
-            btn.addEventListener('mouseout', () => {
-              btn.classList.remove('clicked');
-            });
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    this.lang === 'en' ? recognition.lang = 'en-US' : recognition.lang = 'ru-Ru'
+
+    recognition.addEventListener('result', e => {
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+
+      if (!this.isVoiceEnteringOn) {
+        return;
+      } if (e.results[0].isFinal) {
+        document.querySelector('.textarea').textContent += ` ${transcript}`;
+      }
+    });
+
+    if (this.isVoiceEnteringOn) {
+      this.isVoiceEnteringOn = false;
+      recognition.abort();
+    } else {
+      this.isVoiceEnteringOn = true;
+      recognition.start();
+      recognition.onresult = function (event) {
+        recognition.stop();
+        recognition.addEventListener('end', () => {
+          if (document.querySelector('[data-additional-which="voiceEntering"]').classList.contains('clicked')) {
+            recognition.start();
+          } else {
+            recognition.abort();
           }
-        }
+        });
+      };
+    }
+  }
+
+  addHandlerForAdditionalVirtualKeys() {
+    const voiceEnteringBtn = document.querySelector('[data-additional-which="voiceEntering"]');
+    const switchLanguageBtn = document.querySelector('[data-additional-which="switchLanguage"]');
+
+    switchLanguageBtn.addEventListener('mousedown', () => {
+      switchLanguageBtn.classList.add('clicked');
+      switchLanguageBtn.querySelector('.language-icon').classList.remove('icon_default-color');
+      switchLanguageBtn.querySelector('.language-icon').classList.add('icon_clicked');
+      switchLanguageBtn.querySelector('div').textContent = this.lang;
+      switchLanguageBtn.addEventListener('mouseup', () => {
+        switchLanguageBtn.classList.remove('clicked');
+        switchLanguageBtn.querySelector('.language-icon').classList.remove('icon_clicked');
+        switchLanguageBtn.querySelector('.language-icon').classList.add('icon_default-color');
+      });
+      switchLanguageBtn.addEventListener('mouseout', () => {
+        switchLanguageBtn.classList.remove('clicked');
+        switchLanguageBtn.querySelector('.language-icon').classList.remove('icon_clicked');
+        switchLanguageBtn.querySelector('.language-icon').classList.add('icon_default-color');
       });
     });
 
-    additionalVirtualBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.dataset.which === 'switchLanguage') btn.textContent = this.lang;
-      });
+    voiceEnteringBtn.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('clicked')) {
+        e.target.classList.remove('clicked');
+        voiceEnteringBtn.querySelector('.microphone-icon').classList.remove('icon_clicked');
+        voiceEnteringBtn.querySelector('.microphone-icon').classList.add('icon_default-color');
+        this.switchVoiceEntering();
+      } else {
+        e.target.classList.add('clicked');
+        voiceEnteringBtn.querySelector('.microphone-icon').classList.remove('icon_default-color');
+        voiceEnteringBtn.querySelector('.microphone-icon').classList.add('icon_clicked');
+        this.switchVoiceEntering();
+      }
     });
   }
 
