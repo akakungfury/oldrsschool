@@ -207,21 +207,88 @@ export default class Keybord {
   }
 
   modifyTextareaValue(eventCode, keyVal, textarea) {
+    const currCaretPosition = textarea.selectionStart;
+    const currTextareaValue = textarea.value;
+    let positionFromLeft;
+
+    const changeStringValue = (addedValue, currStrValue = currTextareaValue) => {
+      if (currCaretPosition !== textarea.value.length) {
+        if (addedValue === 'Backspace') {
+          textarea.value = currStrValue.substring(0, currCaretPosition - 1) + currStrValue.substring(currCaretPosition);
+        } else if (addedValue === 'Delete') {
+          textarea.value = currStrValue.substring(0, currCaretPosition) + currStrValue.substring(currCaretPosition + 1);
+        } else if(addedValue === 'Tab') {
+          textarea.value = `${currStrValue.substring(0, currCaretPosition)}\t${currStrValue.substring(currCaretPosition)}`;
+        } else if(addedValue === 'Enter') {
+          textarea.value = `${currStrValue.substring(0, currCaretPosition)}\n${currStrValue.substring(currCaretPosition)}`;
+        } else {
+          textarea.value = currStrValue.substring(0, currCaretPosition) + keyVal + currStrValue.substring(currCaretPosition);
+        }
+      } else {
+        if (addedValue === 'Backspace') {
+          textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+        } else if (addedValue === 'Delete') {
+          return;
+        } else if (addedValue === 'Tab') {
+          textarea.value += '\t';
+        } else if (addedValue === 'Enter') {
+          textarea.value += '\n';
+        } else {
+          textarea.value += addedValue;
+        }
+      }
+    };
+
+    const updateCursorPosition = (cursorShift = 1) => {
+      textarea.selectionStart = currCaretPosition + cursorShift;
+      textarea.selectionEnd = currCaretPosition + cursorShift;
+    };
+
+    textarea.focus();
     switch (eventCode) {
       case 'Backspace':
-        textarea.value = textarea.value.substring(0, textarea.value.length - 1);
-        break;
-      case 'Tab':
-        textarea.value += '\t';
+        changeStringValue(eventCode);
+        updateCursorPosition(-1);
         break;
       case 'Delete':
-        textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+        changeStringValue(eventCode);
+        updateCursorPosition(0);
         break;
+      case 'Tab':
+        changeStringValue(eventCode);
+        updateCursorPosition();
+        break;
+
       case 'Enter':
-        textarea.value += '\n';
+        changeStringValue(eventCode);
+        updateCursorPosition();
         break;
       case 'Space':
-        textarea.value += ' ';
+        changeStringValue(' ');
+        updateCursorPosition();
+        break;
+      case 'ArrowLeft':
+        if (currCaretPosition - 1 >= 0) {
+          textarea.selectionStart = currCaretPosition - 1;
+          textarea.selectionEnd = currCaretPosition - 1;
+        } else {
+          textarea.selectionStart = 0;
+          textarea.selectionEnd = 0;
+        }
+        break;
+      case 'ArrowRight':
+        textarea.selectionStart += 1;
+        textarea.selectionEnd = textarea.selectionStart;
+        break;
+      case 'ArrowUp':
+        positionFromLeft = currTextareaValue.slice(0, currCaretPosition).match(/(\n).*$(?!\1)/g) || [[1]];
+        textarea.selectionStart -= positionFromLeft[0].length;
+        textarea.selectionEnd = textarea.selectionStart;
+        break;
+      case 'ArrowDown':
+        positionFromLeft = currTextareaValue.slice(currCaretPosition).match(/^.*(\n).*(?!\1)/) || [[1]];
+        textarea.selectionStart += positionFromLeft[0].length;
+        textarea.selectionEnd = textarea.selectionStart;
         break;
       case 'CapsLock':
       case 'ShiftLeft':
@@ -233,7 +300,8 @@ export default class Keybord {
       case 'AltRight':
         break;
       default:
-        textarea.value += keyVal;
+        changeStringValue(keyVal);
+        updateCursorPosition();
         break;
     }
   }
@@ -249,7 +317,6 @@ export default class Keybord {
         const keyShiftVal = this.keysValues.find((key) => key.eWhich == which).eKeyShift;
         const keyCode = this.keysValues.find((key) => key.eWhich == which).eCode;
 
-        textarea.blur();
         if (which == '20' && btn.classList.contains('clicked')) {
           btn.classList.remove('clicked');
         } else if (which == '16' && btn.classList.contains('clicked')) {
@@ -257,6 +324,7 @@ export default class Keybord {
         } else {
           btn.classList.add('clicked');
           btn.addEventListener('mouseout', () => {
+            textarea.focus();
             switch (true) {
               case which == '20':
               case which == '16':
@@ -285,6 +353,7 @@ export default class Keybord {
 
     virtualBtns.forEach((btn) => {
       btn.addEventListener('mouseup', () => {
+        textarea.focus();
         const which = btn.getAttribute('data-which');
         switch (true) {
           case which == '20':
@@ -498,7 +567,6 @@ export default class Keybord {
         virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
       }
       if (virtualBtn !== null) {
-        textarea.blur();
         virtualBtn.classList.remove('clicked');
         const keyVal = this.keysValues.find((key) => key.eCode === event.code).eKey;
         const keyShiftVal = this.keysValues.find((key) => key.eCode === event.code).eKeyShift;
