@@ -431,6 +431,7 @@ export default class Keybord {
 
   switchingOnOffBtnSounds() {
     const virtualBtns = document.querySelectorAll('.keyboard__key');
+    const additionalVirtualBtns = document.querySelectorAll('.keyboard__additional-key');
 
     virtualBtns.forEach((btn) => {
       const which = btn.getAttribute('data-which');
@@ -456,6 +457,16 @@ export default class Keybord {
               this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-en"]').play() : document.querySelector('audio[data-which="key-en"]').stop();
             }
             break;
+        }
+      });
+    });
+
+    additionalVirtualBtns.forEach((btn) => {
+      btn.addEventListener('mousedown', () => {
+        if (this.lang === 'ru') {
+          this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-ru"]').play() : document.querySelector('audio[data-which="key-ru"]').stop();
+        } else {
+          this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-en"]').play() : document.querySelector('audio[data-which="key-en"]').stop();
         }
       });
     });
