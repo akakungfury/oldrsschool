@@ -51,3 +51,5 @@ keyboard.addHandlerForAdditionalVirtualKeys();
 
 keyboard.addHandlerForPhysicalKeys();
 keyboard.addHandlerForVirtualKeys();
+
+keyboard.appendBtnSoundsOnPage();

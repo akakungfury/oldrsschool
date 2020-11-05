@@ -9,6 +9,7 @@ export default class Keybord {
     this.capsLockOn = capsLockOn;
     this.keysValues;
     this.isVoiceEnteringOn = false;
+    this.isBtnSoundsOn = false;
   }
 
   applyKeyboardLanguage() {
@@ -294,9 +295,6 @@ export default class Keybord {
         }
       });
     });
-
-    const shiftBtns = document.querySelectorAll('[data-which="16"]');
-    const capsLockBtn = document.querySelector('[data-which="20"]');
   }
 
   switchVoiceEntering() {
@@ -339,9 +337,96 @@ export default class Keybord {
     }
   }
 
+  appendBtnSoundsOnPage() {
+    const btnSounds = new Map([
+      ['key-en', './src/sounds/en/key.mp3'],
+      ['key-ru', './src/sounds/ru/key.mp3'],
+      ['20', './src/sounds/caps.mp3'],
+      ['8', './src/sounds/backspace.mp3'],
+      ['16', './src/sounds/shift.mp3'],
+      ['13', './src/sounds/enter.mp3'],
+    ]);
+
+    const soundsContainer = document.querySelector('.sounds__container');
+
+    for (let [key, value] of btnSounds){
+      const audio = document.createElement('audio');
+      audio.src = value;
+      audio.crossOrigin="anonymous";
+      audio.setAttribute('data-which', key);
+      soundsContainer.append(audio);
+    };
+
+    document.body.append(soundsContainer);
+  }
+
+  switchingOnOffBtnSounds() {
+    const virtualBtns = document.querySelectorAll('.keyboard__key');
+
+    virtualBtns.forEach((btn) => {
+      const which = btn.getAttribute('data-which');
+
+      btn.addEventListener('mousedown', (event) => {
+        switch (true) {
+          case which === '20':
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="20"]').play() : document.querySelector('audio[data-which="20"]').stop();
+            break;
+          case which === '8':
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="8"]').play() : document.querySelector('audio[data-which="8"]').stop();
+            break;
+          case which === '16':
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="16"]').play() : document.querySelector('audio[data-which="16"]').stop();
+            break;
+          case which === '13':
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="13"]').play() : document.querySelector('audio[data-which="13"]').stop();
+            break;
+          default:
+            if (this.lang === 'ru') {
+              this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-ru"]').play() : document.querySelector('audio[data-which="key-ru"]').stop();
+            } else {
+              this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-en"]').play() : document.querySelector('audio[data-which="key-en"]').stop();
+            }
+            break;
+        }
+      });
+    });
+
+    window.addEventListener('keydown', (event) => {
+      let virtualBtn;
+      event.preventDefault();
+
+      virtualBtn = document.querySelector(`[data-which="${event.which}"]`);
+
+      if (virtualBtn !== null) {
+        switch (true) {
+          case event.keyCode === 20:
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="20"]').play() : document.querySelector('audio[data-which="20"]').stop();
+            break;
+          case event.keyCode === 8:
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="8"]').play() : document.querySelector('audio[data-which="8"]').stop();
+            break;
+          case event.keyCode === 16:
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="16"]').play() : document.querySelector('audio[data-which="16"]').stop();
+            break;
+          case event.keyCode === 13:
+            this.isBtnSoundsOn ? document.querySelector('audio[data-which="13"]').play() : document.querySelector('audio[data-which="13"]').stop();
+            break;
+          default:
+            if (this.lang === 'ru') {
+              this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-ru"]').play() : document.querySelector('audio[data-which="key-ru"]').stop();
+            } else {
+              this.isBtnSoundsOn ? document.querySelector('audio[data-which="key-en"]').play() : document.querySelector('audio[data-which="key-en"]').stop();
+            }
+            break;
+        }
+      }
+    });
+  }
+
   addHandlerForAdditionalVirtualKeys() {
     const voiceEnteringBtn = document.querySelector('[data-additional-which="voiceEntering"]');
     const switchLanguageBtn = document.querySelector('[data-additional-which="switchLanguage"]');
+    const switchSoundOnOffBtn = document.querySelector('[data-additional-which="btnSounds"]');
 
     switchLanguageBtn.addEventListener('mousedown', () => {
       switchLanguageBtn.classList.add('clicked');
@@ -372,6 +457,22 @@ export default class Keybord {
         voiceEnteringBtn.querySelector('.microphone-icon').classList.add('icon_clicked');
         this.switchVoiceEntering();
       }
+    });
+
+    switchSoundOnOffBtn.addEventListener('mousedown', (e) => {
+      if (this.isBtnSoundsOn) {
+        e.target.classList.remove('clicked');
+        switchSoundOnOffBtn.querySelector('.sound-icon').classList.remove('icon_clicked');
+        switchSoundOnOffBtn.querySelector('.sound-icon').classList.add('icon_default-color');
+        this.isBtnSoundsOn = false;
+      } else {
+        e.target.classList.add('clicked');
+        switchSoundOnOffBtn.querySelector('.sound-icon').classList.remove('icon_default-color');
+        switchSoundOnOffBtn.querySelector('.sound-icon').classList.add('icon_clicked');
+        this.isBtnSoundsOn = true;
+      }
+
+      this.switchingOnOffBtnSounds();
     });
   }
 
