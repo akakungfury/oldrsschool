@@ -161,11 +161,17 @@ export default class Keybord {
           if (keyData.eCode.includes('Key') || (this.lang === 'ru' && arr.includes(keyData.eCode) === true)) {
             if (this.capsLockOn) {
               document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
+              if (this.shiftPressed) {
+                document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+              }
             }
             if (!this.capsLockOn) {
               document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
               if (this.lang === 'ru' && arr.includes(keyData.eCode) === true) {
                 document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKey;
+              }
+              if (this.shiftPressed) {
+                document.querySelector(`[data-which="${keyData.eWhich}"]`).firstChild.nodeValue = keyData.eKeyShift;
               }
             }
           }
@@ -334,7 +340,14 @@ export default class Keybord {
             }
           });
         }
-        if (this.shiftPressed) {
+        if (this.shiftPressed && this.capsLockOn) {
+          const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          if (/Key/.test(keyCode) || (this.lang === 'ru' && arr.includes(keyCode) === true)) {
+            this.modifyTextareaValue(keyCode, keyVal, textarea);
+          } else {
+            this.modifyTextareaValue(keyCode, keyShiftVal, textarea);
+          }
+        } else if (this.shiftPressed) {
           this.modifyTextareaValue(keyCode, keyShiftVal, textarea);
         } else if (this.capsLockOn) {
           /* this array need for additional check: for which key need change output value
@@ -581,7 +594,14 @@ export default class Keybord {
         virtualBtn.classList.remove('clicked');
         const keyVal = this.keysValues.find((key) => key.eCode === event.code).eKey;
         const keyShiftVal = this.keysValues.find((key) => key.eCode === event.code).eKeyShift;
-        if (this.shiftPressed) {
+        if (this.shiftPressed && this.capsLockOn) {
+          const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          if (/Key/.test(event.code) || (this.lang === 'ru' && arr.includes(event.code) === true)) {
+            this.modifyTextareaValue(event.code, keyVal, textarea);
+          } else {
+            this.modifyTextareaValue(event.code, keyShiftVal, textarea);
+          }
+        } else if (this.shiftPressed) {
           this.modifyTextareaValue(event.code, keyShiftVal, textarea);
         } else if (this.capsLockOn) {
           /* this array need for additional check: for which key need change output value
