@@ -274,27 +274,49 @@ export default class Keybord {
         updateCursorPosition();
         break;
       case 'ArrowLeft':
-        if (currCaretPosition - 1 >= 0) {
-          textarea.selectionStart = currCaretPosition - 1;
-          textarea.selectionEnd = currCaretPosition - 1;
+        if (this.shiftPressed) {
+          if (currCaretPosition - 1 >= 0) {
+            textarea.selectionStart = currCaretPosition - 1;
+          } else {
+            textarea.selectionStart = 0;
+          }
         } else {
-          textarea.selectionStart = 0;
-          textarea.selectionEnd = 0;
+          if (currCaretPosition - 1 >= 0) {
+            textarea.selectionStart = currCaretPosition - 1;
+            textarea.selectionEnd = currCaretPosition - 1;
+          } else {
+            textarea.selectionStart = 0;
+            textarea.selectionEnd = 0;
+          }
         }
         break;
       case 'ArrowRight':
-        textarea.selectionStart += 1;
-        textarea.selectionEnd = textarea.selectionStart;
+        if (this.shiftPressed) {
+          textarea.selectionEnd += 1;
+        } else {
+          textarea.selectionStart += 1;
+          textarea.selectionEnd = textarea.selectionStart;
+        }
         break;
       case 'ArrowUp':
-        positionFromLeft = currTextareaValue.slice(0, currCaretPosition).match(/(\n).*$(?!\1)/g) || [[1]];
-        textarea.selectionStart -= positionFromLeft[0].length;
-        textarea.selectionEnd = textarea.selectionStart;
+        if (this.shiftPressed) {
+          positionFromLeft = currTextareaValue.slice(0, currCaretPosition).match(/(\n).*$(?!\1)/g) || [[1]];
+          textarea.selectionStart -= positionFromLeft[0].length;
+        } else {
+          positionFromLeft = currTextareaValue.slice(0, currCaretPosition).match(/(\n).*$(?!\1)/g) || [[1]];
+          textarea.selectionStart -= positionFromLeft[0].length;
+          textarea.selectionEnd = textarea.selectionStart;
+        }
         break;
       case 'ArrowDown':
-        positionFromLeft = currTextareaValue.slice(currCaretPosition).match(/^.*(\n).*(?!\1)/) || [[1]];
-        textarea.selectionStart += positionFromLeft[0].length;
-        textarea.selectionEnd = textarea.selectionStart;
+        if (this.shiftPressed) {
+          positionFromLeft = currTextareaValue.slice(currCaretPosition).match(/^.*(\n).*(?!\1)/) || [[1]];
+          textarea.selectionEnd += positionFromLeft[0].length;
+        } else {
+          positionFromLeft = currTextareaValue.slice(currCaretPosition).match(/^.*(\n).*(?!\1)/) || [[1]];
+          textarea.selectionStart += positionFromLeft[0].length;
+          textarea.selectionEnd = textarea.selectionStart;
+        }
         break;
       case 'CapsLock':
       case 'ShiftLeft':
