@@ -8,6 +8,7 @@ export default class Keybord {
     this.shiftPressed = shiftPressed;
     this.capsLockOn = capsLockOn;
     this.keysValues;
+    this.recognition = new webkitSpeechRecognition();
     this.isVoiceEnteringOn = false;
     this.isBtnSoundsOn = false;
   }
@@ -146,6 +147,9 @@ export default class Keybord {
         this.keysValues = enKeys;
       }
       e.target.querySelector('div').textContent = this.lang;
+      this.recognition.abort();
+      this.recognition = new webkitSpeechRecognition();
+      this.lang === 'en' ? this.recognition.lang = 'en-US' : this.recognition.lang = 'ru-Ru'
       this.switchKeyboardLayout('lang');
     });
   }
@@ -401,13 +405,9 @@ export default class Keybord {
     });
   }
 
-  switchVoiceEntering() {
-    const recognition = new webkitSpeechRecognition();
-
+  switchVoiceEntering(recognition) {
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
-
-    this.lang === 'en' ? recognition.lang = 'en-US' : recognition.lang = 'ru-Ru'
 
     recognition.addEventListener('result', e => {
       const transcript = Array.from(e.results)
@@ -565,12 +565,15 @@ export default class Keybord {
         e.target.classList.remove('clicked');
         voiceEnteringBtn.querySelector('.microphone-icon').classList.remove('icon_clicked');
         voiceEnteringBtn.querySelector('.microphone-icon').classList.add('icon_default-color');
-        this.switchVoiceEntering();
+        this.switchVoiceEntering(this.recognition);
       } else {
         e.target.classList.add('clicked');
         voiceEnteringBtn.querySelector('.microphone-icon').classList.remove('icon_default-color');
         voiceEnteringBtn.querySelector('.microphone-icon').classList.add('icon_clicked');
-        this.switchVoiceEntering();
+        this.recognition.abort();
+        this.recognition = new webkitSpeechRecognition();
+        this.lang === 'en' ? this.recognition.lang = 'en-US' : this.recognition.lang = 'ru-Ru'
+        this.switchVoiceEntering(this.recognition);
       }
     });
 
