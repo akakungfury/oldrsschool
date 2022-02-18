@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Calculator</title>
+</head>
+
+<body>
+  <div class="instruction">
+    <p>Возведение в степень X<sup>n</sup>, где X - основание, n - показатель:<br>
+      3<sup>2</sup> => '3' > 'X<sup>n</sup>' > '2' > '='
+    </p>
+    <p>Квадратный корень извлекаетя сразу при нажатии:<br>
+      √9 => '9' > '√'
+    </p>
+  </div>
+
+  <div class="calculator-grid">
+
+    <div class="output-display">
+      <div data-previous-operand class="previous-operand"></div>
+      <div data-current-operand class="current-operand"></div>
+    </div>
+
+    <button data-all-clear class="span-two">ac</button>
+    <button data-delete>del</button>
+    <button data-change-sign>+/-</button>
+    <button data-number>1</button>
+    <button data-number>2</button>
+    <button data-number>3</button>
+    <button data-operation>÷</button>
+    <button data-number>4</button>
+    <button data-number>5</button>
+    <button data-number>6</button>
+    <button data-operation>*</button>
+    <button data-number>7</button>
+    <button data-number>8</button>
+    <button data-number>9</button>
+    <button data-operation>+</button>
+    <button data-number>.</button>
+    <button data-number>0</button>
+    <button data-operation>x<sup class="notUpperCases">n</sup></button>
+    <button data-operation>-</button>
+    <button data-equals class="span-three">=</button>
+    <button data-operation>√</button>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
