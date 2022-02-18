@@ -1,0 +1,24 @@
+{
+  "name": "photo-filter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prt": "prettier --write \"**/*.js\"",
+    "lint": "eslint \"**/*.js\" --ignore-pattern \"node_modules/\"",
+    "lint-fix": "eslint --fix \"**/*.js\" --ignore-pattern \"node_modules/\""
+  },
+  "keywords": [],
+  "author": "Aleks Khudnitski",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1"
+  }
+}
