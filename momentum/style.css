@@ -1,0 +1,325 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 20px;
+  font-family: 'Oxygen Mono', Courier, monospace;
+}
+
+body {
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  z-index: -999;
+  background: radial-gradient(ellipse at center 50%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0) 75%);
+}
+
+.background-container {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.time{
+  font-size: 6rem;
+  font-family: 'Major Mono Display', Courier, monospace;
+  font-weight: 900;
+
+}
+
+.date {
+  font-size: 3rem;
+  font-family: 'Major Mono Display', Courier, monospace;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 4vh 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h1>span:nth-of-type(2):focus {
+  min-width: 30%;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 2vh 0;
+}
+
+/* h1 > span {
+  min-width: 10%;
+} */
+
+.focus:hover::after {
+  height: 1.5rem;
+  font-size: 0.75rem;
+  content: '...';
+  position: absolute;
+  line-height: 2.5rem;
+}
+
+.name:hover:after {
+  height: 2rem;
+  font-size: 1rem;
+  content: '...';
+  position: absolute;
+  line-height: 3.5rem;
+  transition: all .3s linear;
+}
+
+.focus:hover,
+.name:hover {
+  cursor: pointer;
+  transform: scale(1.015);
+  transition: all .3s linear;
+}
+
+.focus:focus,
+.name:focus {
+ outline: none;
+}
+
+.focus:focus::after,
+.name:focus::after {
+ content: none;
+}
+
+.background-pagination {
+  margin: 2vh 0;
+}
+
+.background-pagination>h2 {
+  margin: 1vh 0;
+}
+
+.button {
+  font-size: 2rem;
+  font-family: 'Major Mono Display', Courier, monospace;
+  width: 3rem;
+  height: 2.3rem;
+  background-color: rgba(255,255,255,.3);
+  color: white;
+  border: 1px solid white;
+  border-radius: 20%;
+}
+
+.button:hover {
+  background-color: rgba(255,255,255, 1);
+  color: black;
+  border: 1px solid black;
+  outline: none;
+  transform: scale(1.1);
+  transition: all .3s linear;
+}
+
+.button__arrow-left:hover {
+  transform: translate(-3px, 0);
+  transition: all .2s ease;
+}
+
+.button__arrow-right:hover {
+  transform: translate(3px, 0);
+  transition: all .2s linear;
+}
+
+.button:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 900px){
+  .time{
+    font-size: 3rem;
+  }
+
+  .date {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .background-container {
+    padding: 10px 20px;
+  }
+}
+
+@media only screen and (max-width: 450px){
+  .background-container {
+    padding: 5px 10px;
+    align-items: center;
+  }
+
+  .time{
+    font-size: 2.25rem;
+  }
+
+  .date {
+    font-size: 1.5rem;
+  }
+
+}
+
+@media only screen and (max-width: 375px){
+  .background-container {
+    padding: 5px 10px;
+  }
+
+  .time{
+    font-size: 1.5rem;
+  }
+
+  .date {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: .75rem;
+  }
+
+  .focus:hover::after {
+    height: .75rem;
+    font-size: .375rem;
+    content: '...';
+    position: absolute;
+    line-height: 1.25rem;
+  }
+
+  .name:hover:after {
+    height: 1rem;
+    font-size: .5rem;
+    content: '...';
+    position: absolute;
+    line-height: 1.75rem;
+  }
+
+  .advice__container {
+    font-size: .7rem;
+    width: 100%;
+    text-align: center;
+    min-height: 200px;
+  }
+
+  .weather__container {
+    font-size: .7rem;
+  }
+
+  .button__next-advice {
+    margin: 0 auto;
+  }
+}
+
+.advice__container {
+  display: flex;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  width: fit-content;
+  padding: 5px;
+}
+
+.advice__container>h2 {
+  margin: 1vh 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.advice {
+  margin: 1vh 0;
+}
+
+.advice__container>button {
+  display: inline-block;
+}
+
+.button__next-advice {
+  font-size: 1rem;
+  width: fit-content;
+  min-height: 1.5rem;
+  height: 1.5rem;
+  border-radius: 5%;
+  padding: 0 3px;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.main__container {
+  margin-top: 3vh;
+  text-align: center;
+}
+
+.weather__container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.weather{
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  min-height: 13.6%;
+  min-width: 21%;
+}
+
+.weather__icon {
+  line-height: 2rem;
+  transform: scale(2) translate(4px,2px);
+}
+
+.weather__city {
+  cursor: pointer;
+  margin-bottom: 5px;
+  min-width: 100px;
+}
+
+.weather__city:hover:after {
+  font-size: 0.5rem;
+  content: '...';
+  position: absolute;
+  line-height: 1.5rem;
+  transition: all .3s linear;
+}
+
+.weather__city:hover {
+  background-color: rgba(255,255,255, 1);
+  color: black;
+  transition: all .3s linear;
+}
+
+.weather__city:focus {
+  outline: none;
+}
+
+.weather__city:focus:after {
+  content: '';
+}
